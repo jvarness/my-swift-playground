@@ -70,7 +70,7 @@ print("The loop was executed \(count) times!")
 
 // Another collection, the dictionary, is also very easy
 // to make:
-var storeRatings = [ "Wal-Mart" : 1.0, "Price Chopper" : 3.5, "HyVee" : 5.0 ]
+var storeRatings = [ "Wal-Mart" : 1.0, "Price Chopper" : 2.5, "HyVee" : 5.0 ]
 storeRatings["HyVee"]
 
 // storeRatings is a dictionary of Strings to Doubles. You can access
@@ -79,4 +79,73 @@ storeRatings["HyVee"]
 for key in storeRatings.keys {
     var value : Double? = storeRatings[key]
     print("You gave \(key) a rating of \(value) stars!")
+}
+
+// Making code that you can use over and over again is a must. That's
+// where functions come in:
+func calculateCircleArea(radius : Double) -> Double {
+    return pi * pow(radius, 2);
+}
+
+// Then you can calculate the area of circles with lots of different
+// radii.
+calculateCircleArea(2.0)
+calculateCircleArea(3.5)
+calculateCircleArea(1)
+
+// You can also tell a function to take more than one parameter:
+func calculateRightTriangleHypotenuse(a : Double, b : Double) -> Double {
+    return sqrt(pow(a, 2) + pow(b,2))
+}
+
+calculateRightTriangleHypotenuse(1, b : 1)
+calculateRightTriangleHypotenuse(2.3, b: 4.5)
+
+// You can ALSO pass many parameters of the same type without specifying 
+// a placeholder for each one:
+func describeDay(name : String, actions: String...) {
+    print("Things that \(name) did today:")
+    
+    if actions.count == 0 {
+        print("\(name) did nothing")
+    }
+    else {
+        for action in actions {
+            print("\(name) \(action)")
+        }
+    }
+}
+
+describeDay("I", actions: "did laundry", "went to the store", "ate breakfast")
+describeDay("Darth Vader")
+describeDay("Chuck Norris", actions: "killed a house fly just by staring at it", "worked out on his Total Gym and it cried \"Uncle\"", "did a cartwheel and it created a tornado")
+
+// You can ALSO return functions in your functions!
+func badRating(storeName : String) -> String {
+    return "Customers do not like \(storeName)."
+}
+
+func mediocreRating(storeName : String) -> String {
+    return "Customers think \(storeName) is okay."
+}
+
+func goodRating(storeName : String) -> String {
+    return "Customers think \(storeName) is great!"
+}
+
+func getRating(rating : Double) -> (String) -> String {
+    if rating >= 0.0 && rating <= 2.0 {
+        return badRating
+    }
+    else if rating > 2.0 && rating < 3.5 {
+        return mediocreRating
+    }
+    else {
+        return goodRating
+    }
+}
+
+// Once you get the function you want, you can call it!
+for key in storeRatings.keys {
+    getRating(storeRatings[key]!)(key)
 }
