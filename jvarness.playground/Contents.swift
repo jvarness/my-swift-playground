@@ -20,7 +20,7 @@
  import statements can be used to add other libraries (known as modules
  in Swift) to the source.
  */
-import UIKit
+import Foundation
 
 // Declaring variables is easy! Just type 'var', give it a name, and
 // assign it to something!
@@ -149,3 +149,85 @@ func getRating(rating : Double) -> (String) -> String {
 for key in storeRatings.keys {
     getRating(storeRatings[key]!)(key)
 }
+
+// Closures allow you to write encapsulated blocks of code
+// without giving a concrete definition for it.
+let fahrenheitToCelcius = { (temp : Double) -> Double in
+    return (temp - 32) * (5.0 / 9.0)
+}
+
+let celciusToFahrenheit = { (temp : Double) -> Double in
+    return (temp * (9.0 / 5.0)) + 32
+}
+
+let celciusToKelvin = { (temp : Double) -> Double in
+    return temp + 273.15
+}
+
+let kelvinToCelcius = { (temp : Double) -> Double in
+    return temp - 273.15
+}
+
+func temperatureConverter(temperature : Double, converter : (Double) -> Double) -> Double {
+    return converter(temperature)
+}
+
+// You can pass closures into a function just like you
+// can with functions!
+temperatureConverter(32.0, converter: fahrenheitToCelcius)
+temperatureConverter(0, converter: celciusToFahrenheit)
+temperatureConverter(0, converter: celciusToKelvin)
+temperatureConverter(273.15, converter: kelvinToCelcius)
+
+// String, Double, Int, arrays, and dictionaries are great 
+// objects, but what if you want to make your own? Define
+// an object using the class keyword:
+public class Car {
+    // These are the member variables of the Car class
+    private var make : String
+    private var model : String
+    private var year : Int
+    private var horsePower : Int
+    
+    // This is used to construct a Car.
+    public init (make : String, model : String, year : Int, horsePower : Int) {
+        self.make = make
+        self.model = model
+        self.year = year
+        self.horsePower = horsePower
+    }
+    
+    // This can ALSO be used to construct a car, but it doesn't
+    // require as much information.
+    public convenience init (make : String, model : String) {
+        self.init(make: make, model: model, year: 2016, horsePower: 100)
+    }
+    
+    // Below are accessor functions, designed to get information
+    // about the Car.
+    public func getMake() -> String {
+        return self.make
+    }
+    
+    public func getModel() -> String {
+        return self.model
+    }
+    
+    public func getYear() -> Int {
+        return self.year
+    }
+    
+    public func getHorsePower() -> Int {
+        return self.horsePower
+    }
+}
+
+// You can construct an object using it's constructor...
+var myCar = Car(make: "Honda", model: "Civic", year: 2010, horsePower: 82)
+var dreamCar = Car(make : "Nissan", model : "Skyline GT-R")
+
+// ... and call functions to get the variables you constructed it with!
+print("My car is a \(myCar.getYear()) \(myCar.getMake()) \(myCar.getModel()), and it has \(myCar.getHorsePower()) horse power")
+print("My dream car is a \(dreamCar.getYear()) \(dreamCar.getMake()) \(dreamCar.getModel()), and it has \(dreamCar.getHorsePower()) horse power")
+// I have no idea if those are accurate... Pretty sure the second one is wrong.
+
