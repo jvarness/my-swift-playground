@@ -89,17 +89,17 @@ func calculateCircleArea(radius : Double) -> Double {
 
 // Then you can calculate the area of circles with lots of different
 // radii.
-calculateCircleArea(2.0)
-calculateCircleArea(3.5)
-calculateCircleArea(1)
+calculateCircleArea(radius: 2.0)
+calculateCircleArea(radius: 3.5)
+calculateCircleArea(radius: 1)
 
 // You can also tell a function to take more than one parameter:
 func calculateRightTriangleHypotenuse(a : Double, b : Double) -> Double {
     return sqrt(pow(a, 2) + pow(b,2))
 }
 
-calculateRightTriangleHypotenuse(1, b : 1)
-calculateRightTriangleHypotenuse(2.3, b: 4.5)
+calculateRightTriangleHypotenuse(a: 1, b : 1)
+calculateRightTriangleHypotenuse(a: 2.3, b: 4.5)
 
 // You can ALSO pass many parameters of the same type without specifying 
 // a placeholder for each one:
@@ -116,9 +116,9 @@ func describeDay(name : String, actions: String...) {
     }
 }
 
-describeDay("I", actions: "did laundry", "went to the store", "ate breakfast")
-describeDay("Darth Vader")
-describeDay("Chuck Norris", actions: "killed a house fly just by staring at it", "worked out on his Total Gym and it cried \"Uncle\"", "did a cartwheel and it created a tornado")
+describeDay(name: "I", actions: "did laundry", "went to the store", "ate breakfast")
+describeDay(name: "Darth Vader")
+describeDay(name: "Chuck Norris", actions: "killed a house fly just by staring at it", "worked out on his Total Gym and it cried \"Uncle\"", "did a cartwheel and it created a tornado")
 
 // You can ALSO return functions in your functions!
 func badRating(storeName : String) -> String {
@@ -147,7 +147,7 @@ func getRating(rating : Double) -> (String) -> String {
 
 // Once you get the function you want, you can call it!
 for key in storeRatings.keys {
-    getRating(storeRatings[key]!)(key)
+    getRating(rating : storeRatings[key]!)(key)
 }
 
 // Closures allow you to write encapsulated blocks of code
@@ -174,10 +174,10 @@ func temperatureConverter(temperature : Double, converter : (Double) -> Double) 
 
 // You can pass closures into a function just like you
 // can with functions!
-temperatureConverter(32.0, converter: fahrenheitToCelcius)
-temperatureConverter(0, converter: celciusToFahrenheit)
-temperatureConverter(0, converter: celciusToKelvin)
-temperatureConverter(273.15, converter: kelvinToCelcius)
+temperatureConverter(temperature: 32.0, converter: fahrenheitToCelcius)
+temperatureConverter(temperature: 0, converter: celciusToFahrenheit)
+temperatureConverter(temperature: 0, converter: celciusToKelvin)
+temperatureConverter(temperature: 273.15, converter: kelvinToCelcius)
 
 // String, Double, Int, arrays, and dictionaries are great 
 // objects, but what if you want to make your own? Define
