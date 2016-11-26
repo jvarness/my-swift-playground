@@ -32,7 +32,7 @@ print(str)
 
 // You can tell Swift to make your variables a specific type.
 // M_PI is a constant in UIKit that resolve to the value of π.
-let pi : Double = M_PI
+let pi : Double = Double.pi
 // ... let also makes a variable a constant.
 
 // You can print a variable into a meaningful statement using
@@ -231,3 +231,99 @@ print("My car is a \(myCar.getYear()) \(myCar.getMake()) \(myCar.getModel()), an
 print("My dream car is a \(dreamCar.getYear()) \(dreamCar.getMake()) \(dreamCar.getModel()), and it has \(dreamCar.getHorsePower()) horse power")
 // I have no idea if those are accurate... Pretty sure the second one is wrong.
 
+// You can also create structs, which are a lot like classes.
+// The key difference between a struct and a class is that 
+// classes are reference variables, structs aren't.
+struct Point {
+    var x : Double
+    var y : Double
+}
+
+// Normally you can't assign a variable to an instance of a class,
+// and then change the value of one of the properties without each instance
+// chaning, but with a struct...
+var point1 = Point (x: 1.0, y: 2.0)
+var point2 = point1
+point2.x = 5.0
+
+// The value of the first instance is persisted, but you can assign
+// it to another variable and it won't affect the values of the first.
+print("Point 1 is located at: (\(point1.x), \(point1.y)), and point 2 is located at (\(point2.x),\(point2.y))")
+
+// Enums are useful structures that can be used to group together similar concepts...
+enum Planet : Int {
+    case Mercury = 4800
+    case Venus = 12100
+    case Earth = 12750
+    case Mars = 6800
+    case Jupiter = 142800
+    case Saturn = 120660
+    case Uranus = 51800
+    case Neptune = 49500
+    case Pluto = 3300
+}
+
+// You can get the value of the enum by using the rawValue property...
+var planet : Planet = .Earth
+
+print("Planet Earth has a diameter of \(planet.rawValue) kilometers")
+
+// Classes can inherit behavior from other classes. Inheritance allows
+// a class to share the same behavior as it's parent class, but it can
+// also extend the behavior of a class.
+public class SentientBeing {
+    let name : String
+    let origin : Planet
+    
+    init(name : String, origin : Planet){
+        self.name = name
+        self.origin = origin
+    }
+    
+    public func salutation() -> String {
+        var planetName : String
+        switch self.origin {
+            case .Earth:
+                planetName = "Earth"
+            case .Jupiter:
+                planetName = "Jupiter"
+            case .Mars:
+                planetName = "Mars"
+            case .Mercury:
+                planetName = "Mercury"
+            case .Neptune:
+                planetName = "Neptune"
+            case .Pluto:
+                planetName = "Pluto"
+            case .Saturn:
+                planetName = "Saturn"
+            case .Uranus:
+                planetName = "Uranus"
+            default:
+                planetName = "a place unknown"
+        }
+        return "Hello, my name is \(self.name) and I'm from \(planetName)"
+    }
+}
+
+// Earthlings are from earth:
+public class Earthling : SentientBeing {
+    init(name: String){
+        super.init(name: name, origin: .Earth)
+    }
+}
+
+// Martians are from mars:
+public class Martian : SentientBeing {
+    init(name: String){
+        super.init(name: name, origin: .Mars)
+    }
+}
+
+// A SentientBeing can be either a Martian or an Earthling:
+var marvin : SentientBeing = Martian(name:"Marvin")
+var jake : SentientBeing = Earthling(name:"Jake")
+
+// And they can each be used as a SentientBeing as well:
+print(marvin.salutation())
+print(jake.salutation())
