@@ -272,8 +272,8 @@ print("Planet Earth has a diameter of \(planet.rawValue) kilometers")
 // a class to share the same behavior as it's parent class, but it can
 // also extend the behavior of a class.
 public class SentientBeing {
-    let name : String
-    let origin : Planet
+    private let name : String
+    private let origin : Planet
     
     init(name : String, origin : Planet){
         self.name = name
@@ -327,3 +327,62 @@ var jake : SentientBeing = Earthling(name:"Jake")
 // And they can each be used as a SentientBeing as well:
 print(marvin.salutation())
 print(jake.salutation())
+
+// Protocols help define behaviors for classes. Unlike 
+// a base class or a super class, the protocol doesn't
+// have any of the behaviors implemented, rather it acts
+// as a contract that implementing classes need to abide by.
+public protocol Shape {
+    func area() -> Double
+    func perimeter() -> Double
+}
+
+// You can create different Shape objects using the Shape protocol...
+public class Circle : Shape {
+    private let radius : Double
+    
+    init(radius : Double = 0.0) {
+        self.radius = radius
+    }
+    
+    public func perimeter() -> Double {
+        return Double.pi * self.radius * 2
+    }
+    
+    public func area() -> Double {
+        return Double.pi * pow(self.radius, 2.0)
+    }
+}
+
+public class Rectangle : Shape {
+    private let width : Double
+    private let height : Double
+    
+    init(width: Double = 0.0, height: Double = 0.0){
+        self.height = height
+        self.width = width
+    }
+    
+    public func perimeter() -> Double {
+        return (self.height * 2) + (self.width * 2)
+    }
+    
+    public func area() -> Double {
+        return self.height * self.width
+    }
+}
+
+// You can make different kinds of shapes...
+let circle : Shape = Circle(radius: 3.0)
+let square : Shape = Rectangle(width: 2.0, height: 2.0)
+let rectangle : Shape = Rectangle(width: 1.0, height: 3.0)
+
+// And then use them like you would use any shape.
+public func printShapeInfo(shape: Shape) {
+    print("The area of the shape is: \(shape.area())")
+    print("The perimeter of the shape is: \(shape.perimeter())")
+}
+
+printShapeInfo(shape: circle)
+printShapeInfo(shape: square)
+printShapeInfo(shape: rectangle)
