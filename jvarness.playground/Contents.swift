@@ -32,6 +32,7 @@ print(str)
 
 // You can tell Swift to make your variables a specific type.
 // M_PI is a constant in UIKit that resolve to the value of π.
+// In Swift 3, instead of using M_PI, you can reference Double.pi
 let pi : Double = Double.pi
 // ... let also makes a variable a constant.
 
@@ -234,7 +235,7 @@ print("My dream car is a \(dreamCar.getYear()) \(dreamCar.getMake()) \(dreamCar.
 // You can also create structs, which are a lot like classes.
 // The key difference between a struct and a class is that 
 // classes are reference variables, structs aren't.
-struct Point {
+public struct Point {
     var x : Double
     var y : Double
 }
@@ -339,7 +340,7 @@ public protocol Shape {
 
 // You can create different Shape objects using the Shape protocol...
 public class Circle : Shape {
-    private let radius : Double
+    let radius : Double
     
     init(radius : Double = 0.0) {
         self.radius = radius
@@ -355,8 +356,8 @@ public class Circle : Shape {
 }
 
 public class Rectangle : Shape {
-    private let width : Double
-    private let height : Double
+    let width : Double
+    let height : Double
     
     init(width: Double = 0.0, height: Double = 0.0){
         self.height = height
@@ -386,3 +387,67 @@ public func printShapeInfo(shape: Shape) {
 printShapeInfo(shape: circle)
 printShapeInfo(shape: square)
 printShapeInfo(shape: rectangle)
+
+// Extensions allow you to extend the beavior of any 
+// class. You can add variables, functions, etc.
+// So, for example, you could extend Swift's String
+// structure to include a method to print strings:
+public extension String {
+    func printString() {
+        print(self)
+    }
+}
+
+// So now you can call printString on any old string and it will 
+// output to the console:
+str.printString()
+
+// You can also make extensions that contain computed properties:
+public extension Int {
+    var squared : Int {
+        return Int(pow(Double(self), 2.0))
+    }
+    
+    var absoluteValue : Int {
+        return self < 0 ? self * -1 : self
+    }
+}
+
+func numberInformation(num : Int) {
+    print("\(num) has an absolute value of \(num.absoluteValue) and a squared value of \(num.squared)")
+}
+
+let num1 : Int = 54;
+let num2 : Int = -34;
+let num3 : Int = -73;
+
+numberInformation(num: num1)
+numberInformation(num: num2)
+numberInformation(num: num3)
+numberInformation(num: -4)
+
+// If you wanted to create a property that would modify the values
+// of a structure, you can create an extension using the mutating keyword:
+public extension Point {
+    mutating func movePoint(adjustX: Double, adjustY: Double) {
+        self.x += adjustX
+        self.y += adjustY
+    }
+}
+
+print("Point before adjustment: (\(point1.x),\(point1.y))")
+point1.movePoint(adjustX: -5.0, adjustY: 3.0)
+print("Point after adjustment: (\(point1.x),\(point1.y))")
+
+// Extensions also work on classes:
+public extension Rectangle {
+    public func isSquare() -> Bool {
+        return self.height == self.width
+    }
+}
+
+let realSquare : Rectangle = Rectangle(width: 2.0, height: 2.0)
+let notSquare : Rectangle = Rectangle(width: 1.0, height: 3.0)
+
+realSquare.isSquare()
+notSquare.isSquare()
